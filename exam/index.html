@@ -1,0 +1,78 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+<meta charset="utf-8">
+<title>作业考试系统</title>
+    <link rel="stylesheet" type="text/css" href="theme/1/css/common.css">
+    <link rel="stylesheet" type="text/css" href="theme/1/css/style.css">
+    <link rel="stylesheet" type="text/css" href="theme/1/css/EditingArea.css">
+    <link rel="stylesheet" type="text/css" href="theme/1/css/table.css">
+    <link rel="stylesheet" type="text/css" href="theme/1/css/icon.css">
+    <link rel="stylesheet" type="text/css" href="theme/1/css/zy.css">
+
+    <script src="framework/jquery-2.0.0/jquery.min.js"></script>   <!--先导入jQuery,angular依赖它-->
+    <script src="framework/angular-1.4.0/angular.min.js"></script>
+    <script src="framework/angular-1.4.0/angular-route.min.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/subject.js"></script>
+    <script src="js/paper.js"></script>
+
+</head>
+
+<body>
+<div class="main">
+	<div id="top">
+    	<div class="top">
+        	<div class="tk_logo"></div>
+            <div class="t_sign">
+            	<span>你好，管理员</span><a href="#" class="t_exit">退出</a>
+            </div>
+            <div class="t_icon">
+            	<ul>
+                	<li><a href="#" class="t1"><span>桌面</span></a></li>
+                    <li><a href="#" class="t2"><span>换肤</span></a></li>
+                    <li><a href="#" class="t3"><span>关于</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="cont">
+    	<div class="centent">
+        	<div class="left c_view">
+            	<ul class="baseUI">
+                    <!--题库 列表-->       <!--href="javascript:void(0)" 可以屏蔽a标签的默认行为-->
+                	<li>
+                        <a href="javascript:void(0)"><em class="base_basicset"></em><span>题库</span></a>
+                        <ul>    <!--修改点击“全部题目”时的url。然后修改index.js中的路径。再修改subjectList中点击a便签时的url-->
+                            <li class="current"><a href="#/SubjectList/dpId/0/topicId/0/levelId/0/typeId/0">题目管理</a></li>
+                            <!--<li><a href="#/SubjectManager">题目管理</a></li>-->
+                        </ul>
+                    </li>
+                    <!--试卷管理 列表-->
+                    <li>
+                        <a href="javascript:void(0)"><em class="base_userset"></em><span>试卷管理</span></a>
+                        <ul>
+                            <li><a href="#/PaperList">试卷列表</a></li>
+                            <li><a href="#/PaperAdd/id/0/stem/0/type/0/topic/0/level/0">手工组卷</a></li>
+                        </ul>
+                    </li>
+                    <!--考试管理 列表-->
+                    <li><a href="javascript:void(0)"><em class="base_teachergroup"></em><span>考试管理</span></a>
+                        <ul>
+                            <li><a href="#">考试列表</a></li>
+                            <li><a href="#">考试安排</a></li>
+                        </ul>
+                    </li>
+                   
+                </ul>
+            </div>
+            <div class="right" ng-view>
+                <!--展示右边数据内容-->
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <div id="foot"><a href="#">上海师悦信息科技有限公司</a></div>
+</div>
+</body>
+</html>

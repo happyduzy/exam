@@ -1,0 +1,163 @@
+<!--给每道选项加样式-->
+<style>
+    .Catalogcontentup ul{
+        margin: 15px;
+    }
+    .Catalogcontentup li{
+        line-height: 22px;/*字体大小一般用偶数，其它用奇数*/
+    }
+</style>
+<!--{{params}}-->  <!--对params做测试，看点击时路径参数是否正确-->
+<div class="editingarea">
+    <div class="c_flex"><span class="c_flexible"></span></div>
+    <div class="c_editview">
+        <div class="c_condition">
+            <span>
+                <select>
+                    <option>题干</option>
+                    <option>选项</option>
+                </select>
+            </span>
+            <span class="pl5 " ><input type="text"></span>
+            <span class="pl15 pr15 btn_gray ">查找</span>
+            <span class="icon_lead-in">
+                <!--<em class="icon_r">批量导入题目</em>-->
+            </span>
+            <span class="icon_add">
+                <em class="icon_r">
+                    <a href="#/SubjectAdd">单个添加题目</a>
+                </em>
+            </span>
+        </div>
+        <div class="divtable">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tablea">
+                <!--题型菜单-->
+                <tr>
+                    <td align="center" style="width: 50px">题型</td><!--重写css样式，更改一个其它都会改变，因为块级的原因-->
+                    <td align="left">
+                        <div class="chose">
+                            <a href="#/SubjectList/dpId/{{params.dpId}}/topicId/{{params.topicId}}/levelId/{{params.levelId}}/typeId/0" class="{{params.typeId == 0 ? 'active3' : ''}}">全部</a>
+                            <a href="#/SubjectList/dpId/{{params.dpId}}/topicId/{{params.topicId}}/levelId/{{params.levelId}}/typeId/{{type.id}}" ng-repeat="type in types" class="{{params.typeId == type.id ? 'active3' : ''}}">{{type.realName}}</a>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 修改a的url。
+                    “全部”按钮的typeId参数值需要写死，为0，因为是默认不选中内容。
+                    其它的id是动态的，选中“方向、知识点、难度”中的标签时，可以将它们的id值参数传入此处。
+                    这样可以达到复选的效果，这样一来，筛选数据时就可以把不同的条件组合在一起。
+                -->
+                <!--方向菜单-->
+                <tr>
+                    <td align="center">方向</td>
+                    <td align="left">
+                        <div class="chose">
+                            <a href="#/SubjectList/dpId/0/topicId/{{params.topicId}}/levelId/{{params.levelId}}/typeId/{{params.typeId}}" class="{{params.dpId == 0 ? 'active3' : ''}}">全部</a>
+                            <a href="#/SubjectList/dpId/{{department.id}}/topicId/{{params.topicId}}/levelId/{{params.levelId}}/typeId/{{params.typeId}}" ng-repeat="department in departments" class="{{params.dpId == department.id ? 'active3' : ''}}">{{department.name}}</a>
+                        </div>
+                    </td>
+                </tr>
+                <!--知识点菜单-->
+                <tr>
+                    <td align="center">知识点</td>
+                    <td align="left">
+                        <div class="chose">
+                            <a href="#/SubjectList/dpId/{{params.dpId}}/topicId/0/levelId/{{params.levelId}}/typeId/{{params.typeId}}" class="{{params.topicId == 0 ? 'active3' : ''}}">全部</a>
+                            <a href="#/SubjectList/dpId/{{params.dpId}}/topicId/{{topic.id}}/levelId/{{params.levelId}}/typeId/{{params.typeId}}" ng-repeat="topic in topics" class="{{params.topicId == topic.id ? 'active3' : ''}}">{{topic.title}}</a>
+                            <!--如果发现逻辑没有问题时，查json数据库是否正确-->
+                        </div>
+                    </td>
+                </tr>
+                <!--难度菜单-->
+                <tr>
+                    <td align="center">难度</td>
+                    <td align="left">
+                        <div class="chose">
+                            <a href="#/SubjectList/dpId/{{params.dpId}}/topicId/{{params.topicId}}/levelId/0/typeId/{{params.typeId}}"
+                               class="{{params.levelId == 0 ? 'active3' : ''}}">
+                                全部
+                            </a>
+                            <a href="#/SubjectList/dpId/{{params.dpId}}/topicId/{{params.topicId}}/levelId/{{level.id}}/typeId/{{params.typeId}}"
+                               ng-repeat="level in levels"
+                               class="{{params.levelId == level.id ? 'active3' : ''}}">
+                                {{level.realName}}
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <!--显示所有试题部分-->
+        <div class="Catalog">
+                <!--isShow:{{isShow}} --> <!--测试isShow的数据-->
+            <div class="Catalog_right">
+                <div class="Catalogtitle">
+                    总计<em>15552</em>道题&nbsp;&nbsp;
+                    提示：单击题面可显示答案和解析&nbsp;&nbsp;
+                    <input type="checkbox" ng-model="isShow" />
+                    <!--双向数据绑定，与ng-isShow中的isShow相呼应。复选框选中时的value值为true，反之为false-->
+                    <!--若不定义，一开始isShow为undefined，系统自动转换后为false；当checkbox被勾选时，变为true。这是它的特性-->
+                    <b>显示答案和解析</b>&nbsp;&nbsp;
+                    <!--<a href="#" class="Thispage">本页全部试题加入试卷</a>-->
+                    <div>
+                        <i>1</i>
+                        <a href="#" class="pageone">前</a>
+                        <a href="#" class="pagetwo">后</a>
+                    </div>
+                </div>
+                <!--题目列表-->
+                <div class="Catalog_rightnei" ng-repeat="subject in subjects">
+                    <div class="Catalogtitwo">
+                        题号：{{subject.id}}&nbsp;&nbsp;
+                        题型：{{subject.subjectType.realName}}&nbsp;&nbsp;
+                        难度：{{subject.subjectLevel.realName}}&nbsp;&nbsp;
+                        审核状态：<span style="color: red">{{subject.checkState}}</span>&nbsp;&nbsp;
+                        上传人：{{subject.user}}&nbsp;&nbsp;
+                        上传时间：{{subject.uploadTime}}&nbsp;&nbsp;
+                    </div>
+                    <div class="Catalogcontent">
+                        <div class="Catalogcontentup">
+                            <!--题干-->
+                            {{$index+1}}、{{subject.stem}}
+                            <!--选项-->
+                            <ul>
+                                <li ng-repeat="choice in subject.choices">
+                                   {{$index | indexToNo}}、{{choice.content}}
+                                    <!--只用“$index”时，为0、1、2、3，所以将数字转换为ABCD即可，所以添加过滤器即可-->
+                                </li>
+                            </ul>
+                            <div ng-show="isShow"><!--isShow是个变量，代替了true、false-->
+                                正确答案：{{subject.answer}}
+                                <br>
+                                答案解析：{{subject.analysis}}
+                            </div>
+                        </div>
+                        <div class="Catalogcontentdown">
+                            <a href="#/SubjectCheck/id/{{subject.id}}/state/通过">审核通过</a>
+                            <a href="#/SubjectCheck/id/{{subject.id}}/state/不通过">审核不通过</a>
+                            <a href="#/SubjectDel/id/{{subject.id}}">删除题目</a>
+                            <a href="#">加入试卷</a>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="Catalog_rightnei">
+                    <div class="Catalogtitwo">
+                        题号：25544&nbsp;&nbsp;
+                        题型：还是得&nbsp;&nbsp;
+                        难度：订餐&nbsp;&nbsp;
+                        上传人：女性司机&nbsp;&nbsp;
+                        来源：才能使得&nbsp;&nbsp;
+                        上传时间:220255&nbsp;&nbsp;
+                        组卷次数：<em>0</em>
+                    </div>
+                    <div class="Catalogcontent">
+                        <div class="Catalogcontentup">题型</div>
+                        <div class="Catalogcontentdown">
+                            <a href="#">加入试卷</a>
+                        </div>
+                    </div>
+                </div>--><!--删除,将来用ng-repeat来显示-->
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+</div>

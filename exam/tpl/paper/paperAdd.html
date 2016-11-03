@@ -1,0 +1,102 @@
+{{model}}  <!--测试获取数据-->
+<div class="editingarea">
+    <div class="c_flex"><span class="c_flexible"></span></div>
+    <div class="Topictitle">添加试卷</div>
+    <div class="c_editview">
+        <div class="information">
+            <!--试卷名称-->
+            <div class="informationtop">
+                <b style="float:left">试卷名称：</b>
+                <b><input type="text" ng-model="model.title" style="width: 310px"/></b>
+            </div>
+
+            <!--试卷说明-->
+            <div class="informationdown">
+                <div class="informationdownleft">
+                    <b style="float:left">试卷说明：</b>
+                    <b><textarea ng-model="model.description"></textarea></b>
+                </div>
+                <div class="clear"></div>
+            </div>
+
+            <!--所属方向-->
+            <div class="informationtop">
+                <b style="float:left">所属方向：</b>
+                <b>
+                    <select ng-model="model.dpId"
+                            ng-options="dp.id as dp.name for dp in departments">
+                        <!--<option value="">WebUI</option>-->
+                        <!--<option value="">JavaEE</option>-->
+                    </select>
+                </b>
+            </div>
+
+            <!--答题时间-->
+            <div class="informationtop">
+                <b style="float:left">答题时间：</b>
+                <b>
+                    <input ng-model="model.answerQuestionTime" type="text">小时
+                </b>
+            </div>
+        </div>
+
+        <div class="c_condition">
+            <!--试卷总分-->
+            <b style="float: right">
+                <span class="pl5">试卷总分：</span>
+                <span class="pl5"><input type="text" ng-model="model.totalPoints"/></span>
+            </b>
+
+            <!--添加题目-->
+            <span class="icon_add" style="float: left">
+                <em class="icon_r" style="float: left">
+                    <a href="#/PaperAddSubject">添加题目</a>
+                </em>
+            </span>
+
+            <!--试卷预览-->
+            <span class="icon_add" style="float: left">
+                <em class="icon_r" style="float: left">试卷预览</em>
+            </span>
+        </div>
+
+        <!--试卷列表-->
+        <div class="divtable">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0" class="tab1">
+                <tbody>
+                <tr>
+                    <th  class="tc" width="300" ><span>试题描述</span></th>
+                    <th class="tc"><span>题型</span></th>
+                    <th class="tc"><span>考核知识点</span></th>
+                    <th class="tc"><span>认知水平</span></th>
+                    <th class="tc"><span>分数</span></th>
+                    <th class="tc"><span>操作</span></th>
+                </tr>
+
+                <tr ng-repeat="subjectu in model.subjects">
+                    <td class="tc">{{subjectu.stem}}</td>
+                    <td class="tc">{{subjectu.type}}</td>
+                    <td class="tc">{{subjectu.topic}}</td>
+                    <td class="tc">{{subjectu.level}}</td>
+                    <td class="tc"><input type="text" ng-model="model.scores[$index]"/></td>
+                    <td class="tc">
+                        <div class="Onlinee">
+                            <a href="#" class="jians">天假</a>
+                            <a href="#" class="yioan">天假</a>
+                        </div>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+        <div class="btn_left">
+            <span class="btnL">
+                <em class="btnR" ng-click="savePaper()">保存</em>
+            </span>
+        </div>
+    </div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
